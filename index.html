@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高考高频词汇复习</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#2B2A26">
+<style>
+  :root{
+    --paper:#FBF7ED;
+    --paper2:#F4EEDD;
+    --ink:#2B2A26;
+    --ink-soft:#6B6559;
+    --line:#DFD6BE;
+    --hi:#F6D746;
+    --hi-ink:#5C4A00;
+    --mint:#B7E4C7;
+    --mint-ink:#1B5E3A;
+    --coral:#F4A79D;
+    --coral-ink:#7A2A1E;
+    --card:#FFFFFF;
+    --shadow: 2px 3px 0 rgba(43,42,38,0.12);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:"PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,sans-serif;
+    background:
+      repeating-linear-gradient(var(--paper), var(--paper) 35px, var(--line) 36px),
+      var(--paper);
+    color:var(--ink);
+    min-height:100vh;
+  }
+  .wrap{max-width:900px;margin:0 auto;padding:28px 20px 60px;}
+
+  header{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:16px;
+    border-bottom:3px solid var(--ink);
+    padding-bottom:14px;
+    margin-bottom:22px;
+  }
+  header h1{
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:30px;
+    margin:0 0 4px;
+    letter-spacing:0.5px;
+  }
+  header h1 span{
+    background:linear-gradient(180deg, transparent 60%, var(--hi) 60%);
+    padding:0 3px;
+  }
+  header p{margin:0;color:var(--ink-soft);font-size:13px;}
+  .stats{display:flex;gap:10px;}
+  .stat{
+    background:var(--card);
+    border:1.5px solid var(--ink);
+    box-shadow:var(--shadow);
+    padding:8px 14px;
+    text-align:center;
+    min-width:64px;
+  }
+  .stat b{display:block;font-size:20px;line-height:1.1;}
+  .stat span{font-size:11px;color:var(--ink-soft);}
+
+  nav.tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+  }
+  nav.tabs button{
+    font-family:inherit;
+    font-size:14px;
+    padding:9px 18px;
+    border:1.5px solid var(--ink);
+    background:var(--card);
+    cursor:pointer;
+    box-shadow:var(--shadow);
+    color:var(--ink);
+  }
+  nav.tabs button.active{
+    background:var(--ink);
+    color:var(--paper);
+  }
+
+  .panel{display:none;}
+  .panel.active{display:block;}
+
+  /* --- Flashcard mode --- */
+  .flash-area{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:16px;
+  }
+  .flash-progress{font-size:13px;color:var(--ink-soft);}
+  .flashcard{
+    width:100%;
+    max-width:440px;
+    min-height:230px;
+    background:var(--card);
+    border:2px solid var(--ink);
+    box-shadow:5px 6px 0 rgba(43,42,38,0.15);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:26px;
+    cursor:pointer;
+    position:relative;
+  }
+  .flashcard .tag{
+    position:absolute;
+    top:12px;
+    left:14px;
+    font-size:11px;
+    color:var(--ink-soft);
+    border:1px solid var(--line);
+    padding:2px 8px;
+  }
+  .flashcard .word{
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:38px;
+    margin-bottom:10px;
+  }
+  .flashcard .pos{color:var(--ink-soft);font-size:13px;margin-bottom:14px;}
+  .flashcard .meaning{
+    font-size:20px;
+    display:none;
+    line-height:1.6;
+  }
+  .flashcard.flipped .word{font-size:24px;color:var(--ink-soft);}
+  .flashcard.flipped .meaning{display:block;}
+  .flashcard .hint{position:absolute;bottom:10px;font-size:11px;color:var(--ink-soft);}
+
+  .flash-btns{display:flex;gap:10px;}
+  .flash-btns button{
+    font-family:inherit;
+    font-size:14px;
+    padding:10px 18px;
+    border:1.5px solid var(--ink);
+    background:var(--card);
+    cursor:pointer;
+    box-shadow:var(--shadow);
+  }
+  .btn-know{background:var(--mint);color:var(--mint-ink);border-color:var(--mint-ink);}
+  .btn-unknow{background:var(--coral);color:var(--coral-ink);border-color:var(--coral-ink);}
+
+  /* --- List mode --- */
+  .list-controls{
+    display:flex;
+    gap:10px;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+  }
+  .list-controls input[type=text]{
+    flex:1;
+    min-width:180px;
+    padding:9px 12px;
+    border:1.5px solid var(--ink);
+    background:var(--card);
+    font-family:inherit;
+    font-size:14px;
+  }
+  .list-controls select{
+    padding:9px 12px;
+    border:1.5px solid var(--ink);
+    background:var(--card);
+    font-family:inherit;
+    font-size:14px;
+  }
+  .word-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(260px,1fr));
+    gap:10px;
+  }
+  .word-card{
+    background:var(--card);
+    border:1.5px solid var(--ink);
+    box-shadow:var(--shadow);
+    padding:12px 14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+  }
+  .word-card .info .w{font-weight:bold;font-size:16px;}
+  .word-card .info .p{font-size:11px;color:var(--ink-soft);}
+  .word-card .info .m{font-size:13px;margin-top:2px;}
+  .word-card button{
+    border:1px solid var(--ink);
+    background:var(--paper2);
+    width:30px;height:30px;
+    cursor:pointer;
+    font-size:15px;
+    flex-shrink:0;
+  }
+  .word-card.mastered{border-color:var(--mint-ink);}
+  .word-card.mastered button{background:var(--mint);}
+  .empty-msg{color:var(--ink-soft);text-align:center;padding:30px;font-size:14px;}
+
+  /* --- Quiz mode --- */
+  .quiz-box{
+    max-width:480px;
+    margin:0 auto;
+    background:var(--card);
+    border:2px solid var(--ink);
+    box-shadow:5px 6px 0 rgba(43,42,38,0.15);
+    padding:26px;
+    text-align:center;
+  }
+  .quiz-box .qmeaning{font-size:20px;margin-bottom:6px;}
+  .quiz-box .qpos{color:var(--ink-soft);font-size:13px;margin-bottom:18px;}
+  .quiz-box input{
+    width:100%;
+    padding:10px 12px;
+    font-size:16px;
+    border:1.5px solid var(--ink);
+    font-family:inherit;
+    margin-bottom:12px;
+  }
+  .quiz-box .qbtns{display:flex;gap:10px;justify-content:center;}
+  .quiz-box button{
+    font-family:inherit;
+    font-size:14px;
+    padding:9px 16px;
+    border:1.5px solid var(--ink);
+    background:var(--paper2);
+    cursor:pointer;
+  }
+  .quiz-feedback{margin-top:12px;font-size:14px;min-height:20px;}
+  .quiz-feedback.correct{color:var(--mint-ink);}
+  .quiz-feedback.wrong{color:var(--coral-ink);}
+  .quiz-score{text-align:center;color:var(--ink-soft);font-size:13px;margin-bottom:14px;}
+
+  footer{
+    margin-top:40px;
+    text-align:center;
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+  @media(max-width:520px){
+    header h1{font-size:24px;}
+    .flashcard .word{font-size:28px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1><span>高考高频</span>英语词汇</h1>
+      <p id="subtitle">共 0 词 · 点击卡片查看释义，标记掌握进度</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="statTotal">0</b><span>总词数</span></div>
+      <div class="stat"><b id="statMastered">0</b><span>已掌握</span></div>
+      <div class="stat"><b id="statLeft">0</b><span>待复习</span></div>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button data-tab="flash" class="active">闪卡背诵</button>
+    <button data-tab="list">单词列表</button>
+    <button data-tab="quiz">拼写测试</button>
+  </nav>
+
+  <section id="panel-flash" class="panel active">
+    <div class="flash-area">
+      <div class="flash-progress" id="flashProgress"></div>
+      <div class="flashcard" id="flashcard">
+        <div class="tag" id="flashTag">未掌握</div>
+        <div class="word" id="flashWord">word</div>
+        <div class="pos" id="flashPos">n.</div>
+        <div class="meaning" id="flashMeaning">释义</div>
+        <div class="hint">点击卡片翻面</div>
+      </div>
+      <div class="flash-btns">
+        <button class="btn-unknow" id="btnUnknow">✗ 还不熟</button>
+        <button id="btnSkip">下一个 →</button>
+        <button class="btn-know" id="btnKnow">✓ 已掌握</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="panel-list" class="panel">
+    <div class="list-controls">
+      <input type="text" id="searchInput" placeholder="搜索单词或释义...">
+      <select id="filterSelect">
+        <option value="all">全部</option>
+        <option value="mastered">已掌握</option>
+        <option value="unmastered">未掌握</option>
+      </select>
+    </div>
+    <div class="word-grid" id="wordGrid"></div>
+  </section>
+
+  <section id="panel-quiz" class="panel">
+    <div class="quiz-score" id="quizScore">得分 0 / 0</div>
+    <div class="quiz-box">
+      <div class="qmeaning" id="quizMeaning">释义</div>
+      <div class="qpos" id="quizPos">n.</div>
+      <input type="text" id="quizInput" placeholder="请输入对应的英语单词" autocomplete="off">
+      <div class="qbtns">
+        <button id="quizSubmit">提交</button>
+        <button id="quizNext">跳过 →</button>
+      </div>
+      <div class="quiz-feedback" id="quizFeedback"></div>
+    </div>
+  </section>
+
+  <footer>共 688 词，为高频词精选合集，按词形难度粗略排序（非官方真题词频统计），建议结合课本大纲词表交叉复习。进度仅保存在当前浏览会话中，刷新页面会重置。</footer>
+</div>
+
+<script>
+const WORDS = [
+["aid","n.","援助"],
+["aim","n./v.","目标；瞄准"],
+["due","adj.","应有的；到期的"],
+["era","n.","时代"],
+["fee","n.","费用"],
+["gap","n.","差距"],
+["odd","adj.","奇怪的"],
+["owe","v.","欠"],
+["via","prep.","经由"],
+["bare","adj.","赤裸的"],
+["bias","n.","偏见"],
+["bold","adj.","大胆的"],
+["bond","n.","纽带"],
+["cast","v.","投；铸造"],
+["cite","v.","引用"],
+["clue","n.","线索"],
+["cope","v.","应付"],
+["core","n.","核心"],
+["crew","n.","全体人员"],
+["deny","v.","否认"],
+["edge","n.","边缘"],
+["envy","n./v.","嫉妒"],
+["fade","v.","褪色；消失"],
+["fair","adj.","公平的"],
+["fate","n.","命运"],
+["fund","n.","资金"],
+["gene","n.","基因"],
+["grab","v.","抓住"],
+["leap","v.","跳跃"],
+["norm","n.","规范"],
+["obey","v.","服从"],
+["rare","adj.","稀有的"],
+["rely","v.","依赖"],
+["risk","n.","风险"],
+["seek","v.","寻求"],
+["site","n.","地点"],
+["sole","adj.","唯一的"],
+["tend","v.","倾向于"],
+["urge","v.","敦促"],
+["vary","v.","变化"],
+["vast","adj.","广阔的"],
+["warn","v.","警告"],
+["adapt","v.","适应"],
+["admit","v.","承认；准许进入"],
+["adopt","v.","采用；收养"],
+["alarm","n.","警报"],
+["alert","adj.","警觉的"],
+["alien","adj.","外国的；陌生的"],
+["alike","adj.","相似的"],
+["alter","v.","改变"],
+["arise","v.","出现；产生"],
+["asset","n.","资产"],
+["avoid","v.","避免"],
+["awake","adj.","醒着的"],
+["award","n./v.","奖项；授予"],
+["aware","adj.","意识到的"],
+["basis","n.","基础"],
+["blame","v.","责怪"],
+["boost","v.","促进；提高"],
+["brief","adj.","简短的"],
+["civil","adj.","公民的；民间的"],
+["claim","v.","声称"],
+["crash","v.","碰撞；崩溃"],
+["cruel","adj.","残忍的"],
+["delay","v.","推迟"],
+["doubt","n./v.","怀疑"],
+["draft","n.","草稿"],
+["drain","v.","排干"],
+["drift","v.","漂移"],
+["dwell","v.","居住"],
+["eager","adj.","渴望的"],
+["elect","v.","选举"],
+["erase","v.","擦除"],
+["erupt","v.","爆发"],
+["faith","n.","信仰"],
+["fatal","adj.","致命的"],
+["favor","n.","恩惠"],
+["fiber","n.","纤维"],
+["focus","v.","集中"],
+["frank","adj.","坦率的"],
+["greet","v.","问候"],
+["grief","n.","悲伤"],
+["imply","v.","暗示"],
+["infer","v.","推断"],
+["issue","n.","问题；发行"],
+["labor","n.","劳动"],
+["legal","adj.","合法的"],
+["limit","n.","限制"],
+["logic","n.","逻辑"],
+["loyal","adj.","忠诚的"],
+["merge","v.","合并"],
+["merit","n.","优点"],
+["minor","adj.","较小的；次要的"],
+["moral","adj.","道德的"],
+["occur","v.","发生"],
+["panic","n.","恐慌"],
+["pause","v.","暂停"],
+["phase","n.","阶段"],
+["proof","n.","证据"],
+["range","n.","范围"],
+["react","v.","反应"],
+["refer","v.","提及；参考"],
+["renew","v.","更新"],
+["rigid","adj.","僵硬的"],
+["rival","n.","对手"],
+["route","n.","路线"],
+["rural","adj.","农村的"],
+["scale","n.","规模；尺度"],
+["scope","n.","范围"],
+["shift","v.","转变"],
+["solid","adj.","固体的；坚固的"],
+["tense","adj.","紧张的"],
+["theme","n.","主题"],
+["trace","v.","追溯"],
+["trend","n.","趋势"],
+["urban","adj.","城市的"],
+["vague","adj.","模糊的"],
+["valid","adj.","有效的"],
+["vital","adj.","至关重要的"],
+["vivid","adj.","生动的"],
+["weigh","v.","称重；权衡"],
+["yield","v.","产生；屈服"],
+["abroad","adv.","在国外"],
+["absorb","v.","吸收"],
+["absurd","adj.","荒谬的"],
+["accept","v.","接受"],
+["access","n.","通道；机会"],
+["accuse","v.","指责"],
+["actual","adj.","实际的"],
+["admire","v.","钦佩"],
+["affair","n.","事务"],
+["affect","v.","影响"],
+["afford","v.","负担得起"],
+["agency","n.","机构；代理"],
+["agenda","n.","议程"],
+["amount","n.","数量"],
+["annual","adj.","年度的"],
+["appeal","v.","呼吁；吸引"],
+["aspect","n.","方面"],
+["assess","v.","评估"],
+["assign","v.","分配；指派"],
+["assist","v.","协助"],
+["assume","v.","假设；承担"],
+["assure","v.","确保；向...保证"],
+["attach","v.","附加；系"],
+["attain","v.","达到"],
+["attend","v.","出席；照顾"],
+["battle","n.","战斗"],
+["behave","v.","表现"],
+["belief","n.","信念"],
+["betray","v.","背叛"],
+["beyond","prep.","超出"],
+["budget","n.","预算"],
+["burden","n.","负担"],
+["career","n.","职业生涯"],
+["commit","v.","犯（错）；承诺"],
+["comply","v.","遵守"],
+["confer","v.","商讨"],
+["convey","v.","传达"],
+["crisis","n.","危机"],
+["decade","n.","十年"],
+["defeat","v.","击败"],
+["defend","v.","保卫"],
+["define","v.","定义"],
+["demand","n./v.","需求；要求"],
+["depend","v.","依赖"],
+["derive","v.","源自"],
+["detect","v.","侦测"],
+["devise","v.","设计；发明"],
+["devote","v.","奉献"],
+["differ","v.","不同"],
+["divide","v.","划分"],
+["donate","v.","捐赠"],
+["emerge","v.","出现"],
+["employ","v.","雇用；使用"],
+["enable","v.","使能够"],
+["endure","v.","忍受"],
+["engage","v.","参与；从事"],
+["ensure","v.","确保"],
+["entire","adj.","整个的"],
+["estate","n.","地产"],
+["esteem","n.","尊重"],
+["evolve","v.","进化；发展"],
+["fabric","n.","织物；结构"],
+["factor","n.","因素"],
+["famine","n.","饥荒"],
+["fierce","adj.","猛烈的"],
+["figure","n.","数字；人物"],
+["fluent","adj.","流利的"],
+["forbid","v.","禁止"],
+["global","adj.","全球的"],
+["gloomy","adj.","阴郁的"],
+["govern","v.","统治；管理"],
+["guilty","adj.","有罪的"],
+["humble","adj.","谦逊的"],
+["ignore","v.","忽视"],
+["immune","adj.","免疫的"],
+["impact","n.","影响"],
+["impose","v.","强加"],
+["income","n.","收入"],
+["induce","v.","诱导"],
+["infant","n.","婴儿"],
+["infect","v.","感染"],
+["inform","v.","通知"],
+["insist","v.","坚持"],
+["insult","v.","侮辱"],
+["intend","v.","打算"],
+["invade","v.","入侵"],
+["invest","v.","投资"],
+["launch","v.","发射；启动"],
+["lawyer","n.","律师"],
+["locate","v.","位于"],
+["manual","adj.","手动的"],
+["margin","n.","页边空白；差幅"],
+["mature","adj.","成熟的"],
+["medium","n.","媒介"],
+["mental","adj.","精神的"],
+["misery","n.","痛苦"],
+["modify","v.","修改"],
+["motive","n.","动机"],
+["mutual","adj.","相互的"],
+["notion","n.","观念"],
+["oblige","v.","迫使"],
+["obtain","v.","获得"],
+["occupy","v.","占据"],
+["offend","v.","冒犯"],
+["oppose","v.","反对"],
+["option","n.","选择"],
+["orient","v.","定位；导向"],
+["origin","n.","起源"],
+["permit","v.","允许"],
+["policy","n.","政策"],
+["prefer","v.","更喜欢"],
+["prompt","adj.","迅速的"],
+["proper","adj.","恰当的"],
+["punish","v.","惩罚"],
+["pursue","v.","追求"],
+["random","adj.","随机的"],
+["recall","v.","回忆"],
+["reduce","v.","减少"],
+["reform","v.","改革"],
+["refuse","v.","拒绝"],
+["regard","v.","视为"],
+["region","n.","地区"],
+["regret","v.","后悔"],
+["relate","v.","联系"],
+["remark","n.","评论"],
+["remind","v.","提醒"],
+["remote","adj.","遥远的"],
+["render","v.","使成为；提供"],
+["repair","v.","修理"],
+["rescue","v.","营救"],
+["resign","v.","辞职"],
+["resist","v.","抵抗"],
+["retain","v.","保留"],
+["retire","v.","退休"],
+["reveal","v.","揭露"],
+["revise","v.","修改"],
+["reward","n.","奖励"],
+["scarce","adj.","稀缺的"],
+["scheme","n.","方案"],
+["select","v.","选择"],
+["senior","adj.","高级的；年长的"],
+["signal","n.","信号"],
+["source","n.","来源"],
+["stable","adj.","稳定的"],
+["status","n.","地位；状态"],
+["steady","adj.","稳定的"],
+["strict","adj.","严格的"],
+["submit","v.","提交"],
+["suburb","n.","郊区"],
+["survey","n.","调查"],
+["tackle","v.","处理"],
+["talent","n.","天赋"],
+["target","n.","目标"],
+["theory","n.","理论"],
+["threat","n.","威胁"],
+["thrive","v.","茁壮成长"],
+["update","v.","更新"],
+["vanish","v.","消失"],
+["verify","v.","核实"],
+["victim","n.","受害者"],
+["virtue","n.","美德"],
+["vision","n.","视力；愿景"],
+["visual","adj.","视觉的"],
+["volume","n.","体积；音量"],
+["wander","v.","漫游"],
+["abandon","v.","放弃；抛弃"],
+["ability","n.","能力"],
+["absence","n.","缺席；不在"],
+["account","n.","账户；描述"],
+["achieve","v.","达到；实现"],
+["advance","v.","前进；促进"],
+["ancient","adj.","古代的"],
+["approve","v.","批准；赞成"],
+["arrange","v.","安排"],
+["ashamed","adj.","羞愧的"],
+["athlete","n.","运动员"],
+["attempt","v./n.","尝试"],
+["attract","v.","吸引"],
+["average","adj.","平均的"],
+["awkward","adj.","尴尬的"],
+["balance","n.","平衡"],
+["barrier","n.","障碍"],
+["benefit","n./v.","利益；有益于"],
+["capable","adj.","有能力的"],
+["capital","n.","首都；资本"],
+["charity","n.","慈善"],
+["combine","v.","结合"],
+["comment","n.","评论"],
+["compact","adj.","紧凑的"],
+["compare","v.","比较"],
+["compete","v.","竞争"],
+["compose","v.","组成；创作"],
+["conceal","v.","隐藏"],
+["concept","n.","概念"],
+["concern","n./v.","关心；担忧"],
+["conduct","v.","进行；引导"],
+["confine","v.","限制"],
+["confirm","v.","确认"],
+["confuse","v.","使困惑"],
+["consent","n.","同意"],
+["consist","v.","组成；在于"],
+["consult","v.","咨询"],
+["consume","v.","消耗"],
+["contact","n./v.","联系"],
+["contain","v.","包含"],
+["content","n.","内容"],
+["convert","v.","转变"],
+["costume","n.","服装"],
+["council","n.","委员会"],
+["counter","v.","反驳"],
+["courage","n.","勇气"],
+["crucial","adj.","至关重要的"],
+["curious","adj.","好奇的"],
+["current","adj.","当前的"],
+["decline","v.","下降；拒绝"],
+["default","n.","默认；违约"],
+["deliver","v.","传递；发表"],
+["deposit","n.","存款；沉积物"],
+["depress","v.","使沮丧"],
+["deprive","v.","剥夺"],
+["deserve","v.","应得"],
+["destiny","n.","命运"],
+["destroy","v.","摧毁"],
+["dictate","v.","口述；支配"],
+["dignity","n.","尊严"],
+["disgust","n.","厌恶"],
+["dismiss","v.","解雇；驳回"],
+["display","v.","展示"],
+["dispose","v.","处理"],
+["dispute","n.","争端"],
+["disturb","v.","打扰"],
+["diverse","adj.","多样的"],
+["dynamic","adj.","动态的"],
+["ecology","n.","生态学"],
+["economy","n.","经济"],
+["educate","v.","教育"],
+["element","n.","元素"],
+["embrace","v.","拥抱；接受"],
+["emotion","n.","情感"],
+["enhance","v.","提升"],
+["episode","n.","一集；插曲"],
+["ethical","adj.","道德的"],
+["faculty","n.","才能；系（大学）"],
+["feature","n.","特征"],
+["federal","adj.","联邦的"],
+["fertile","adj.","肥沃的"],
+["finance","n.","金融"],
+["fragile","adj.","脆弱的"],
+["fulfill","v.","实现"],
+["furious","adj.","狂怒的"],
+["genuine","adj.","真正的"],
+["gradual","adj.","逐渐的"],
+["habitat","n.","栖息地"],
+["harmony","n.","和谐"],
+["harvest","n.","收获"],
+["hostile","adj.","敌对的"],
+["imitate","v.","模仿"],
+["impress","v.","给...留下印象"],
+["incline","v.","倾向于"],
+["include","v.","包括"],
+["inhabit","v.","居住于"],
+["inherit","v.","继承"],
+["initial","adj.","最初的"],
+["insight","n.","洞察力"],
+["inspect","v.","检查"],
+["inspire","v.","激励"],
+["install","v.","安装"],
+["intense","adj.","强烈的"],
+["involve","v.","涉及"],
+["isolate","v.","隔离"],
+["liberal","adj.","自由的"],
+["license","n.","执照"],
+["literal","adj.","字面的"],
+["mediate","v.","调解"],
+["mention","v.","提及"],
+["migrate","v.","迁移"],
+["minimal","adj.","最小的"],
+["minimum","n.","最小值"],
+["mission","n.","使命"],
+["mystery","n.","谜"],
+["neutral","adj.","中立的"],
+["notable","adj.","显著的"],
+["observe","v.","观察"],
+["obvious","adj.","明显的"],
+["operate","v.","操作；运营"],
+["outcome","n.","结果"],
+["overall","adj.","总体的"],
+["partner","n.","伙伴"],
+["passion","n.","激情"],
+["passive","adj.","被动的"],
+["penalty","n.","惩罚"],
+["persist","v.","坚持"],
+["pioneer","n.","先驱"],
+["portion","n.","部分"],
+["possess","v.","拥有"],
+["poverty","n.","贫穷"],
+["precise","adj.","精确的"],
+["predict","v.","预测"],
+["prevail","v.","盛行"],
+["proceed","v.","继续进行"],
+["process","n.","过程"],
+["promote","v.","促进；晋升"],
+["propose","v.","提议"],
+["prosper","v.","繁荣"],
+["protest","v.","抗议"],
+["provoke","v.","激起"],
+["publish","v.","出版"],
+["reflect","v.","反映；反思"],
+["release","v.","释放"],
+["relieve","v.","缓解"],
+["replace","v.","替换"],
+["reserve","v.","保留"],
+["resolve","v.","解决"],
+["respond","v.","回应"],
+["restore","v.","恢复"],
+["revenue","n.","收入"],
+["reverse","v.","颠倒"],
+["roughly","adv.","大致地"],
+["routine","n.","日常事务"],
+["satisfy","v.","满足"],
+["scatter","v.","散布"],
+["segment","n.","部分"],
+["session","n.","会议；一段时间"],
+["similar","adj.","相似的"],
+["suggest","v.","建议"],
+["suicide","n.","自杀"],
+["summary","n.","摘要"],
+["survive","v.","幸存"],
+["suspect","v.","怀疑"],
+["suspend","v.","暂停；悬挂"],
+["sustain","v.","维持"],
+["symptom","n.","症状"],
+["tragedy","n.","悲剧"],
+["trigger","v.","触发"],
+["triumph","n.","胜利"],
+["trivial","adj.","琐碎的"],
+["typical","adj.","典型的"],
+["undergo","v.","经历"],
+["uniform","n.","制服"],
+["upgrade","v.","升级"],
+["variety","n.","多样性"],
+["vehicle","n.","车辆"],
+["version","n.","版本"],
+["violate","v.","违反"],
+["violent","adj.","暴力的"],
+["virtual","adj.","虚拟的"],
+["visible","adj.","可见的"],
+["welfare","n.","福利"],
+["whereas","conj.","然而"],
+["willing","adj.","愿意的"],
+["witness","v.","目睹"],
+["absolute","adj.","绝对的"],
+["abstract","adj.","抽象的"],
+["abundant","adj.","丰富的"],
+["academic","adj.","学术的"],
+["accident","n.","事故；意外"],
+["accurate","adj.","准确的"],
+["addition","n.","增加；附加"],
+["advocate","v.","提倡"],
+["allocate","v.","分配"],
+["altitude","n.","海拔；高度"],
+["amaze","v.","使惊讶"],
+["ambition","n.","抱负；野心"],
+["announce","v.","宣布"],
+["apparent","adj.","明显的"],
+["approach","v./n.","接近；方法"],
+["assemble","v.","集合；组装"],
+["astonish","v.","使震惊"],
+["attitude","n.","态度"],
+["audience","n.","观众"],
+["campaign","n.","运动；战役"],
+["capacity","n.","能力；容量"],
+["category","n.","类别"],
+["cautious","adj.","谨慎的"],
+["classify","v.","分类"],
+["collapse","v.","倒塌；崩溃"],
+["complain","v.","抱怨"],
+["conclude","v.","得出结论"],
+["conflict","n.","冲突"],
+["confront","v.","面对"],
+["conserve","v.","保护；节约"],
+["consider","v.","考虑"],
+["constant","adj.","持续的"],
+["contract","n.","合同"],
+["contrary","adj.","相反的"],
+["contrast","n.","对比"],
+["convince","v.","说服"],
+["critical","adj.","关键的；批评的"],
+["currency","n.","货币"],
+["decorate","v.","装饰"],
+["dedicate","v.","奉献"],
+["definite","adj.","明确的"],
+["delicate","adj.","精致的；脆弱的"],
+["describe","v.","描述"],
+["diminish","v.","减少"],
+["disaster","n.","灾难"],
+["discount","n.","折扣"],
+["distinct","adj.","明显不同的"],
+["district","n.","地区"],
+["domestic","adj.","国内的；家庭的"],
+["dominant","adj.","占主导地位的"],
+["dramatic","adj.","戏剧性的"],
+["duration","n.","持续时间"],
+["enormous","adj.","巨大的"],
+["envelope","n.","信封"],
+["equip","v.","装备"],
+["estimate","v.","估计"],
+["evaluate","v.","评估"],
+["evidence","n.","证据"],
+["exist","v.","存在"],
+["facility","n.","设施"],
+["familiar","adj.","熟悉的"],
+["feasible","adj.","可行的"],
+["flourish","v.","繁荣"],
+["forecast","v.","预测"],
+["function","n.","功能"],
+["generate","v.","产生"],
+["generous","adj.","慷慨的"],
+["grateful","adj.","感激的"],
+["hesitate","v.","犹豫"],
+["identify","v.","识别"],
+["incident","n.","事件"],
+["indicate","v.","表明"],
+["industry","n.","工业；产业"],
+["inferior","adj.","低劣的"],
+["innocent","adj.","无辜的"],
+["innovate","v.","创新"],
+["instance","n.","例子"],
+["instinct","n.","本能"],
+["instruct","v.","指导"],
+["interact","v.","互动"],
+["internal","adj.","内部的"],
+["interval","n.","间隔"],
+["irritate","v.","激怒"],
+["maintain","v.","维持"],
+["merchant","n.","商人"],
+["moderate","adj.","适度的"],
+["motivate","v.","激励"],
+["obstacle","n.","障碍"],
+["occasion","n.","场合"],
+["opponent","n.","对手"],
+["overcome","v.","克服"],
+["overlook","v.","忽视；俯瞰"],
+["parallel","adj.","平行的"],
+["peculiar","adj.","独特的；奇怪的"],
+["perceive","v.","察觉"],
+["persuade","v.","说服"],
+["physical","adj.","身体的；物理的"],
+["positive","adj.","积极的"],
+["preserve","v.","保护；保存"],
+["previous","adj.","先前的"],
+["priority","n.","优先事项"],
+["profound","adj.","深刻的"],
+["progress","n.","进步"],
+["prohibit","v.","禁止"],
+["property","n.","财产；属性"],
+["prospect","n.","前景"],
+["purchase","v.","购买"],
+["rational","adj.","理性的"],
+["register","v.","注册"],
+["regulate","v.","规范；调节"],
+["relevant","adj.","相关的"],
+["reliable","adj.","可靠的"],
+["religion","n.","宗教"],
+["resemble","v.","像"],
+["resident","n.","居民"],
+["resource","n.","资源"],
+["restrict","v.","限制"],
+["security","n.","安全"],
+["specific","adj.","具体的"],
+["standard","n.","标准"],
+["strategy","n.","策略"],
+["struggle","v.","挣扎"],
+["superior","adj.","优越的"],
+["suppress","v.","压制"],
+["surround","v.","包围"],
+["sympathy","n.","同情"],
+["thorough","adj.","彻底的"],
+["tolerate","v.","容忍"],
+["transfer","v.","转移"],
+["transmit","v.","传输"],
+["treasure","n.","宝藏"],
+["ultimate","adj.","最终的"],
+["withdraw","v.","撤回"],
+["adjust","v.","调整"],
+["exceed","v.","超过"],
+["excess","n.","过量"],
+["expand","v.","扩大"],
+["expert","n.","专家"],
+["export","v.","出口"],
+["expose","v.","暴露"],
+["extend","v.","延伸"],
+["hazard","n.","危险"],
+["inject","v.","注入"],
+["injure","v.","伤害"],
+["object","n./v.","物体；反对"],
+["reject","v.","拒绝"],
+["unique","adj.","独特的"],
+["accompany","v.","陪伴；伴随"],
+["according","adv.","根据"],
+["acquire","v.","获得"],
+["advantage","n.","优势"],
+["adventure","n.","冒险"],
+["analyze","v.","分析"],
+["anxious","adj.","焦虑的"],
+["applicant","n.","申请人"],
+["associate","v.","联系；结交"],
+["attribute","v.","归因于"],
+["authority","n.","权威；当局"],
+["available","adj.","可获得的"],
+["broadcast","v.","广播"],
+["celebrate","v.","庆祝"],
+["challenge","n.","挑战"],
+["colleague","n.","同事"],
+["commodity","n.","商品"],
+["community","n.","社区"],
+["companion","n.","同伴"],
+["complex","adj.","复杂的"],
+["component","n.","组成部分"],
+["confident","adj.","自信的"],
+["conquer","v.","征服"],
+["conscious","adj.","有意识的"],
+["constrain","v.","约束"],
+["construct","v.","建造"],
+["context","n.","语境；背景"],
+["cooperate","v.","合作"],
+["corporate","adj.","公司的"],
+["criterion","n.","标准"],
+["cultivate","v.","培养；耕种"],
+["designate","v.","指定"],
+["desperate","adj.","绝望的"],
+["determine","v.","决定"],
+["dimension","n.","维度"],
+["efficient","adj.","高效的"],
+["elaborate","adj.","精心制作的"],
+["eliminate","v.","消除"],
+["embarrass","v.","使尴尬"],
+["encounter","v.","遭遇"],
+["entertain","v.","娱乐"],
+["essential","adj.","必要的"],
+["establish","v.","建立"],
+["examine","v.","检查"],
+["exclude","v.","排除"],
+["execute","v.","执行"],
+["exhaust","v.","耗尽"],
+["exhibit","v.","展示"],
+["expense","n.","开支"],
+["explore","v.","探索"],
+["extinct","adj.","灭绝的"],
+["extreme","adj.","极端的"],
+["fascinate","v.","使着迷"],
+["frustrate","v.","使沮丧"],
+["guarantee","v.","保证"],
+["hierarchy","n.","等级制度"],
+["highlight","v.","突出显示"],
+["horizon","n.","地平线"],
+["household","n.","家庭"],
+["identical","adj.","相同的"],
+["immediate","adj.","立即的"],
+["immigrant","n.","移民"],
+["implement","v.","实施"],
+["influence","n.","影响"],
+["inquire","v.","询问"],
+["institute","n.","机构"],
+["insurance","n.","保险"],
+["interfere","v.","干涉"]
+];
+
+let mastered = new Set();
+let currentFlashIndex = 0;
+let flashOrder = [];
+let quizOrder = [];
+let quizIndex = 0;
+let quizScore = 0;
+let quizAsked = 0;
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function updateStats(){
+  document.getElementById('statTotal').textContent = WORDS.length;
+  document.getElementById('statMastered').textContent = mastered.size;
+  document.getElementById('statLeft').textContent = WORDS.length - mastered.size;
+  document.getElementById('subtitle').textContent = `共 ${WORDS.length} 词 · 已掌握 ${mastered.size} 个 · 点击卡片查看释义`;
+}
+
+/* ---- Flashcard mode ---- */
+function initFlash(){
+  flashOrder = shuffle(WORDS.map((_,i)=>i));
+  currentFlashIndex = 0;
+  showFlash();
+}
+function showFlash(){
+  const card = document.getElementById('flashcard');
+  card.classList.remove('flipped');
+  if(flashOrder.length === 0){
+    document.getElementById('flashWord').textContent = '暂无单词';
+    document.getElementById('flashPos').textContent = '';
+    document.getElementById('flashMeaning').textContent = '';
+    document.getElementById('flashProgress').textContent = '';
+    return;
+  }
+  if(currentFlashIndex >= flashOrder.length) currentFlashIndex = 0;
+  const idx = flashOrder[currentFlashIndex];
+  const [w,pos,meaning] = WORDS[idx];
+  document.getElementById('flashWord').textContent = w;
+  document.getElementById('flashPos').textContent = pos;
+  document.getElementById('flashMeaning').textContent = meaning;
+  document.getElementById('flashTag').textContent = mastered.has(idx) ? '已掌握' : '未掌握';
+  document.getElementById('flashProgress').textContent = `第 ${currentFlashIndex+1} / ${flashOrder.length} 个`;
+}
+function nextFlash(){
+  currentFlashIndex++;
+  if(currentFlashIndex >= flashOrder.length) currentFlashIndex = 0;
+  showFlash();
+}
+document.getElementById('flashcard').addEventListener('click', ()=>{
+  document.getElementById('flashcard').classList.toggle('flipped');
+});
+document.getElementById('btnKnow').addEventListener('click', ()=>{
+  mastered.add(flashOrder[currentFlashIndex]);
+  updateStats();
+  renderList();
+  nextFlash();
+});
+document.getElementById('btnUnknow').addEventListener('click', ()=>{
+  mastered.delete(flashOrder[currentFlashIndex]);
+  updateStats();
+  renderList();
+  nextFlash();
+});
+document.getElementById('btnSkip').addEventListener('click', nextFlash);
+
+/* ---- List mode ---- */
+function renderList(){
+  const grid = document.getElementById('wordGrid');
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const filter = document.getElementById('filterSelect').value;
+  grid.innerHTML = '';
+  let count = 0;
+  WORDS.forEach((item, idx)=>{
+    const [w,pos,meaning] = item;
+    if(q && !w.toLowerCase().includes(q) && !meaning.includes(q)) return;
+    const isMastered = mastered.has(idx);
+    if(filter==='mastered' && !isMastered) return;
+    if(filter==='unmastered' && isMastered) return;
+    count++;
+    const card = document.createElement('div');
+    card.className = 'word-card' + (isMastered ? ' mastered' : '');
+    card.innerHTML = `<div class="info"><span class="w">${w}</span> <span class="p">${pos}</span><div class="m">${meaning}</div></div>
+      <button title="切换掌握状态">${isMastered ? '✓' : '○'}</button>`;
+    card.querySelector('button').addEventListener('click', ()=>{
+      if(mastered.has(idx)) mastered.delete(idx); else mastered.add(idx);
+      updateStats();
+      renderList();
+    });
+    grid.appendChild(card);
+  });
+  if(count===0){
+    grid.innerHTML = '<div class="empty-msg">没有找到匹配的单词</div>';
+  }
+}
+document.getElementById('searchInput').addEventListener('input', renderList);
+document.getElementById('filterSelect').addEventListener('change', renderList);
+
+/* ---- Quiz mode ---- */
+function initQuiz(){
+  quizOrder = shuffle(WORDS.map((_,i)=>i));
+  quizIndex = 0;
+  quizScore = 0;
+  quizAsked = 0;
+  showQuiz();
+}
+function showQuiz(){
+  document.getElementById('quizFeedback').textContent = '';
+  document.getElementById('quizFeedback').className = 'quiz-feedback';
+  document.getElementById('quizInput').value = '';
+  document.getElementById('quizScore').textContent = `得分 ${quizScore} / ${quizAsked}`;
+  if(quizIndex >= quizOrder.length) quizOrder = shuffle(quizOrder), quizIndex = 0;
+  const idx = quizOrder[quizIndex];
+  const [w,pos,meaning] = WORDS[idx];
+  document.getElementById('quizMeaning').textContent = meaning;
+  document.getElementById('quizPos').textContent = pos;
+  document.getElementById('quizInput').focus();
+}
+function submitQuiz(){
+  const idx = quizOrder[quizIndex];
+  const answer = WORDS[idx][0];
+  const input = document.getElementById('quizInput').value.trim().toLowerCase();
+  const fb = document.getElementById('quizFeedback');
+  if(!input) return;
+  quizAsked++;
+  if(input === answer.toLowerCase()){
+    quizScore++;
+    fb.textContent = '回答正确！';
+    fb.className = 'quiz-feedback correct';
+    mastered.add(idx);
+    updateStats();
+    renderList();
+  } else {
+    fb.textContent = `不对哦，正确答案是：${answer}`;
+    fb.className = 'quiz-feedback wrong';
+  }
+  document.getElementById('quizScore').textContent = `得分 ${quizScore} / ${quizAsked}`;
+  quizIndex++;
+  setTimeout(showQuiz, input === answer.toLowerCase() ? 700 : 1600);
+}
+document.getElementById('quizSubmit').addEventListener('click', submitQuiz);
+document.getElementById('quizInput').addEventListener('keydown', e=>{
+  if(e.key==='Enter') submitQuiz();
+});
+document.getElementById('quizNext').addEventListener('click', ()=>{
+  quizIndex++;
+  showQuiz();
+});
+
+/* ---- Tabs ---- */
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+    if(btn.dataset.tab==='quiz' && quizOrder.length===0) initQuiz();
+  });
+});
+
+/* ---- Init ---- */
+updateStats();
+initFlash();
+renderList();
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
