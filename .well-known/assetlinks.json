@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.gaokao.words",
+        "sha256_cert_fingerprints": ["8E:86:D2:D4:E1:70:CC:C5:4F:33:39:0F:79:D8:CF:1F:AB:1D:0C:99:56:54:56:75:09:D3:FC:47:29:34:A7:0E"]
+      }
+    }]
